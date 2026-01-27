@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+ENV/
+.eggs/
+*.egg-info/
+*.egg
+
+# Node
+node_modules/
+dist/
+.npm
+*.tgz
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+nohup.out
+
+# Build
+build/
+*.build/
+
+# Test
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Playwright MCP screenshots
+.playwright-mcp/
+
+# Claude settings
+.claude/
+
+# uv
+.uv/
+uv.lock

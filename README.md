@@ -22,6 +22,14 @@
   <a href="#-사용-가이드">사용 가이드</a>
 </p>
 
+<p align="center">
+  <strong>한국어</strong> •
+  <a href="./docs/i18n/README.en.md">English</a> •
+  <a href="./docs/i18n/README.ja.md">日本語</a> •
+  <a href="./docs/i18n/README.zh.md">中文</a> •
+  <a href="./docs/i18n/README.es.md">Español</a>
+</p>
+
 ---
 
 ## 🎯 왜 FORMTION인가?

@@ -80,28 +80,63 @@ export function isValidNotionUrl(url: string) {
   return parsed.hostname.includes('notion.so') || parsed.hostname.includes('notion.site')
 }
 
-// localStorage 유틸리티
+// 스토리지 가용성 체크
+const isStorageAvailable = (type: 'localStorage' | 'sessionStorage'): boolean => {
+  try {
+    const storage = window[type]
+    const testKey = '__storage_test__'
+    storage.setItem(testKey, testKey)
+    storage.removeItem(testKey)
+    return true
+  } catch {
+    return false
+  }
+}
+
+// localStorage 유틸리티 (sessionStorage 폴백 포함)
 export const storage = {
   get: <T>(key: string, defaultValue?: T): T | undefined => {
     try {
-      const item = localStorage.getItem(key)
-      return item ? JSON.parse(item) : defaultValue
+      // localStorage 먼저 시도
+      if (isStorageAvailable('localStorage')) {
+        const item = localStorage.getItem(key)
+        if (item) return JSON.parse(item)
+      }
+      // sessionStorage 폴백 (iOS Safari private mode)
+      if (isStorageAvailable('sessionStorage')) {
+        const item = sessionStorage.getItem(key)
+        if (item) return JSON.parse(item)
+      }
+      return defaultValue
     } catch {
       return defaultValue
     }
   },
   set: <T>(key: string, value: T) => {
+    const jsonValue = JSON.stringify(value)
     try {
-      localStorage.setItem(key, JSON.stringify(value))
+      // localStorage에 저장 시도
+      if (isStorageAvailable('localStorage')) {
+        localStorage.setItem(key, jsonValue)
+      }
+      // sessionStorage에도 저장 (폴백용)
+      if (isStorageAvailable('sessionStorage')) {
+        sessionStorage.setItem(key, jsonValue)
+      }
     } catch {
-      // localStorage 사용 불가 시 무시
+      // 스토리지 사용 불가 시 무시
     }
   },
   remove: (key: string) => {
     try {
-      localStorage.removeItem(key)
+      if (isStorageAvailable('localStorage')) {
+        localStorage.removeItem(key)
+      }
+      if (isStorageAvailable('sessionStorage')) {
+        sessionStorage.removeItem(key)
+      }
     } catch {
-      // localStorage 사용 불가 시 무시
+      // 스토리지 삭제 실패 시 무시
     }
   },
 }

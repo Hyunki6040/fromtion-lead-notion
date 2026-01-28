@@ -109,18 +109,31 @@ export const storage = {
 // Cookie 유틸리티
 export const cookie = {
   get: (name: string): string | undefined => {
-    const value = `; ${document.cookie}`
-    const parts = value.split(`; ${name}=`)
-    if (parts.length === 2) return parts.pop()?.split(';').shift()
-    return undefined
+    try {
+      const value = `; ${document.cookie}`
+      const parts = value.split(`; ${name}=`)
+      if (parts.length === 2) return parts.pop()?.split(';').shift()
+      return undefined
+    } catch {
+      return undefined
+    }
   },
   set: (name: string, value: string, days: number = 30) => {
-    const expires = new Date()
-    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000)
-    document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`
+    try {
+      const expires = new Date()
+      expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000)
+      // SameSite=Lax for better mobile Safari compatibility
+      document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;SameSite=Lax`
+    } catch {
+      // Cookie 설정 실패 시 무시
+    }
   },
   remove: (name: string) => {
-    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`
+    try {
+      document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;SameSite=Lax`
+    } catch {
+      // Cookie 삭제 실패 시 무시
+    }
   },
 }
 

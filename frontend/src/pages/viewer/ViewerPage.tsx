@@ -64,6 +64,13 @@ export default function ViewerPage() {
       const response = await projectApi.getPublic(slug!)
       setProject(response.data)
 
+      // URL 파라미터로 강제 리셋 (?reset=1)
+      if (searchParams.get('reset') === '1') {
+        unlockStorage.clearUnlocked(response.data.project_id)
+        // URL에서 reset 파라미터 제거
+        window.history.replaceState({}, '', window.location.pathname)
+      }
+
       // Unlock 상태 확인 - 로그인 사용자는 자동 언락
       const unlocked = isAuthenticated || unlockStorage.isUnlocked(response.data.project_id)
       setIsUnlocked(unlocked)

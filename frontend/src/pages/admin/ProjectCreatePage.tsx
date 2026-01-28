@@ -204,7 +204,13 @@ export default function ProjectCreatePage() {
       addToast({ type: 'success', message: '프로젝트가 생성되었습니다!' })
       navigate(`/admin/projects/${projectId}`)
     } catch (error: any) {
-      const message = error.response?.data?.detail || '프로젝트 생성에 실패했습니다.'
+      let message = '프로젝트 생성에 실패했습니다.'
+      const detail = error.response?.data?.detail
+      if (typeof detail === 'string') {
+        message = detail
+      } else if (Array.isArray(detail) && detail.length > 0) {
+        message = detail[0]?.msg || message
+      }
       addToast({ type: 'error', message })
     } finally {
       setIsSubmitting(false)
@@ -441,14 +447,14 @@ export default function ProjectCreatePage() {
                           <div className="flex items-center gap-3">
                             <Switch
                               checked={fieldData.enabled}
-                              onChange={(checked) =>
+                              onChange={(e) =>
                                 setData({
                                   ...data,
                                   form_config: {
                                     ...data.form_config,
                                     fields: {
                                       ...data.form_config.fields,
-                                      [fieldKey]: { ...fieldData, enabled: checked },
+                                      [fieldKey]: { ...fieldData, enabled: (e.target as HTMLInputElement).checked },
                                     },
                                   },
                                 })
@@ -475,7 +481,7 @@ export default function ProjectCreatePage() {
                                 ...data.form_config,
                                 consent: {
                                   ...data.form_config.consent,
-                                  privacy: { ...data.form_config.consent.privacy, enabled: e.target.checked },
+                                  privacy: { ...data.form_config.consent.privacy, enabled: (e.target as HTMLInputElement).checked },
                                 },
                               },
                             })
@@ -494,7 +500,7 @@ export default function ProjectCreatePage() {
                                 ...data.form_config,
                                 consent: {
                                   ...data.form_config.consent,
-                                  marketing: { ...data.form_config.consent.marketing, enabled: e.target.checked },
+                                  marketing: { ...data.form_config.consent.marketing, enabled: (e.target as HTMLInputElement).checked },
                                 },
                               },
                             })
@@ -514,23 +520,6 @@ export default function ProjectCreatePage() {
                         form_config: { ...data.form_config, button_label: e.target.value },
                       })
                     }
-                  />
-
-                  <Input
-                    label="콘텐츠 해제 시간 (분)"
-                    type="number"
-                    placeholder="30"
-                    value={data.form_config.unlock_duration.toString()}
-                    onChange={(e) =>
-                      setData({
-                        ...data,
-                        form_config: {
-                          ...data.form_config,
-                          unlock_duration: parseInt(e.target.value) || 30,
-                        },
-                      })
-                    }
-                    helperText="설정한 시간이 지나면 다시 폼을 보여줍니다"
                   />
                 </div>
               </SettingsSection>

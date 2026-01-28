@@ -73,8 +73,17 @@ export default function ProjectEditPage() {
     try {
       await projectApi.update(projectId!, project)
       addToast({ type: 'success', message: '저장되었습니다.' })
-    } catch (error) {
-      addToast({ type: 'error', message: '저장에 실패했습니다.' })
+    } catch (error: any) {
+      let message = '저장에 실패했습니다.'
+      const detail = error.response?.data?.detail
+      if (typeof detail === 'string') {
+        message = detail
+      } else if (Array.isArray(detail) && detail.length > 0) {
+        const field = detail[0]?.loc?.slice(-1)[0] || ''
+        const errorMsg = detail[0]?.msg || ''
+        message = field ? `${field}: ${errorMsg}` : errorMsg
+      }
+      addToast({ type: 'error', message })
     } finally {
       setIsSaving(false)
     }

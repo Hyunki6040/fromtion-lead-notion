@@ -76,7 +76,7 @@ class BlindConfig(BaseModel):
     intensity: str = Field(default="medium", pattern="^(light|medium|strong)$")
     preview_height: int = Field(default=3, ge=1, le=10)
     text_highlight_ratio: Optional[int] = Field(default=30, ge=0, le=100)
-    iframe_height: int = Field(default=600, ge=200, le=2000)
+    iframe_height: int = Field(default=600, ge=200, le=10000)
     keyword_blackout: KeywordBlackoutConfig = KeywordBlackoutConfig()
 
 

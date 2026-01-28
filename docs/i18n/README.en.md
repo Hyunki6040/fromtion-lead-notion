@@ -16,14 +16,14 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Hyunki6040/fromtion-lead-notion">GitHub</a> •
+  <a href="https://github.com/Hyunki6040/formtion-lead-for-notion">GitHub</a> •
   <a href="#-quick-start">Quick Start</a> •
   <a href="#-ec2-deployment-guide">EC2 Deployment</a> •
   <a href="#-user-guide">User Guide</a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/Hyunki6040/fromtion-lead-notion/blob/main/README.md">한국어</a> •
+  <a href="https://github.com/Hyunki6040/formtion-lead-for-notion/blob/main/README.md">한국어</a> •
   <strong>English</strong> •
   <a href="./README.ja.md">日本語</a> •
   <a href="./README.zh.md">中文</a> •
@@ -95,8 +95,8 @@ Manage collected leads at a glance.
 
 ```bash
 # Clone
-git clone https://github.com/Hyunki6040/fromtion-lead-notion.git
-cd fromtion-lead-notion
+git clone https://github.com/Hyunki6040/formtion-lead-for-notion.git
+cd formtion-lead-for-notion
 
 # Backend setup
 cd backend
@@ -220,7 +220,7 @@ View leads in real-time on the dashboard and export to CSV.
 ### Project Structure
 
 ```
-fromtion-lead-notion/
+formtion-lead-for-notion/
 ├── backend/
 │   ├── app/
 │   │   ├── api/          # API endpoints
@@ -268,8 +268,8 @@ source ~/.bashrc
 
 ```bash
 cd ~
-git clone https://github.com/Hyunki6040/fromtion-lead-notion.git
-cd fromtion-lead-notion
+git clone https://github.com/Hyunki6040/formtion-lead-for-notion.git
+cd formtion-lead-for-notion
 
 # Backend setup
 cd backend
@@ -309,7 +309,7 @@ After=network.target
 
 [Service]
 User=ubuntu
-WorkingDirectory=/home/ubuntu/fromtion-lead-notion/backend
+WorkingDirectory=/home/ubuntu/formtion-lead-for-notion/backend
 Environment="PATH=/home/ubuntu/.local/bin:/usr/bin"
 ExecStart=/home/ubuntu/.local/bin/uv run uvicorn app.main:app --host 127.0.0.1 --port 8000
 Restart=always
@@ -331,7 +331,7 @@ sudo systemctl status formtion-api
 ### Step 4: Setup deploy.sh
 
 ```bash
-cd ~/fromtion-lead-notion
+cd ~/formtion-lead-for-notion
 chmod +x deploy.sh
 ```
 
@@ -340,7 +340,7 @@ chmod +x deploy.sh
 After code changes:
 
 ```bash
-cd ~/fromtion-lead-notion
+cd ~/formtion-lead-for-notion
 ./deploy.sh
 ```
 
@@ -358,7 +358,7 @@ location /api {
 
 # Frontend static files
 location / {
-    root /home/ubuntu/fromtion-lead-notion/frontend/dist;
+    root /home/ubuntu/formtion-lead-for-notion/frontend/dist;
     try_files $uri $uri/ /index.html;
 }
 ```
@@ -446,5 +446,5 @@ MIT License - Use freely.
 </p>
 
 <p align="center">
-  Made with ❤️ by <a href="https://github.com/Hyunki6040/fromtion-lead-notion">FORMTION Team</a>
+  Made with ❤️ by <a href="https://github.com/Hyunki6040/formtion-lead-for-notion">FORMTION Team</a>
 </p>

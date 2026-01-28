@@ -62,8 +62,8 @@ export API_URL="https://your-domain.com"  # 로컬: http://localhost:8000
 ### 2. 설치 및 실행
 
 ```bash
-git clone https://github.com/Hyunki6040/fromtion-lead-notion.git
-cd fromtion-lead-notion
+git clone https://github.com/Hyunki6040/formtion-lead-for-notion.git
+cd formtion-lead-for-notion
 
 # 초기 설정 (최초 1회)
 ./setup.sh
@@ -92,8 +92,8 @@ sudo apt update && sudo apt install -y python3.11 python3.11-venv nodejs npm sql
 curl -LsSf https://astral.sh/uv/install.sh | sh && source ~/.bashrc
 
 # 2. 프로젝트 클론
-git clone https://github.com/Hyunki6040/fromtion-lead-notion.git
-cd fromtion-lead-notion
+git clone https://github.com/Hyunki6040/formtion-lead-for-notion.git
+cd formtion-lead-for-notion
 
 # 3. 환경 변수 설정 후 설치
 export JWT_SECRET="your-production-secret-key"
@@ -136,7 +136,7 @@ export API_URL="https://your-domain.com"
 ## 📂 프로젝트 구조
 
 ```
-fromtion-lead-notion/
+formtion-lead-for-notion/
 ├── backend/          # FastAPI + SQLAlchemy
 ├── frontend/         # React + TypeScript + Vite
 ├── setup.sh          # 초기 설정
@@ -169,5 +169,5 @@ MIT License
 </p>
 
 <p align="center">
-  Made with ❤️ by <a href="https://github.com/Hyunki6040/fromtion-lead-notion">FORMTION Team</a>
+  Made with ❤️ by <a href="https://github.com/Hyunki6040/formtion-lead-for-notion">FORMTION Team</a>
 </p>

@@ -16,14 +16,14 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Hyunki6040/fromtion-lead-notion">GitHub</a> •
+  <a href="https://github.com/Hyunki6040/formtion-lead-for-notion">GitHub</a> •
   <a href="#-快速开始">快速开始</a> •
   <a href="#-ec2部署指南">EC2部署</a> •
   <a href="#-使用指南">使用指南</a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/Hyunki6040/fromtion-lead-notion/blob/main/README.md">한국어</a> •
+  <a href="https://github.com/Hyunki6040/formtion-lead-for-notion/blob/main/README.md">한국어</a> •
   <a href="./README.en.md">English</a> •
   <a href="./README.ja.md">日本語</a> •
   <strong>中文</strong> •
@@ -95,8 +95,8 @@ FORMTION为你的Notion页面添加**「门禁」**。
 
 ```bash
 # 克隆
-git clone https://github.com/Hyunki6040/fromtion-lead-notion.git
-cd fromtion-lead-notion
+git clone https://github.com/Hyunki6040/formtion-lead-for-notion.git
+cd formtion-lead-for-notion
 
 # 后端设置
 cd backend
@@ -214,8 +214,8 @@ source ~/.bashrc
 
 ```bash
 cd ~
-git clone https://github.com/Hyunki6040/fromtion-lead-notion.git
-cd fromtion-lead-notion
+git clone https://github.com/Hyunki6040/formtion-lead-for-notion.git
+cd formtion-lead-for-notion
 
 cd backend
 cp env.template .env
@@ -243,7 +243,7 @@ After=network.target
 
 [Service]
 User=ubuntu
-WorkingDirectory=/home/ubuntu/fromtion-lead-notion/backend
+WorkingDirectory=/home/ubuntu/formtion-lead-for-notion/backend
 Environment="PATH=/home/ubuntu/.local/bin:/usr/bin"
 ExecStart=/home/ubuntu/.local/bin/uv run uvicorn app.main:app --host 127.0.0.1 --port 8000
 Restart=always
@@ -262,7 +262,7 @@ sudo systemctl start formtion-api
 ### 步骤4: 更新部署
 
 ```bash
-cd ~/fromtion-lead-notion
+cd ~/formtion-lead-for-notion
 ./deploy.sh
 ```
 
@@ -279,5 +279,5 @@ MIT License - 自由使用。
 </p>
 
 <p align="center">
-  Made with ❤️ by <a href="https://github.com/Hyunki6040/fromtion-lead-notion">FORMTION Team</a>
+  Made with ❤️ by <a href="https://github.com/Hyunki6040/formtion-lead-for-notion">FORMTION Team</a>
 </p>

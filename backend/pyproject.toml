@@ -35,8 +35,8 @@ dev = [
     "ruff>=0.1.14",
 ]
 
-[tool.uv]
-dev-dependencies = [
+[dependency-groups]
+dev = [
     "ruff>=0.1.14",
 ]
 

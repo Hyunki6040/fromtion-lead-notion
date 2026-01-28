@@ -319,7 +319,7 @@ export default function LandingPage() {
                 <span className="text-white font-bold text-xs">F</span>
               </div>
               <span className="text-sm text-text-muted">
-                © 2025 FORMTION. Open Source Project.
+                © 2026 FORMTION. Open Source Project.
               </span>
             </div>
             <div className="flex items-center gap-6">

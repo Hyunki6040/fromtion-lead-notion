@@ -69,7 +69,7 @@ class BlindConfig(BaseModel):
 
     method: str = Field(
         default="preview-then-blur",
-        pattern="^(section-blur|preview-then-blur|keyword-blackout|random-text-highlight)$",
+        pattern="^(none|section-blur|preview-then-blur|keyword-blackout|random-text-highlight)$",
     )
     preset: str = Field(default="middle", pattern="^(top|middle|bottom)$")
     position: int = Field(default=30, ge=0, le=100)

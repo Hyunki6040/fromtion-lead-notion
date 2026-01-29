@@ -337,8 +337,8 @@ export default function LivePreview({
                 </div>
               )}
 
-              {/* 블러 오버레이 */}
-              {!isUnlocked && notionUrl && (
+              {/* 블러 오버레이 - method가 'none'이면 표시하지 않음 */}
+              {!isUnlocked && notionUrl && blindConfig?.method !== 'none' && (
                 <BlurOverlay
                   method={blindConfig?.method || 'preview-then-blur'}
                   intensity={blindConfig?.intensity || 'medium'}

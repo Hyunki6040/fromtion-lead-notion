@@ -164,6 +164,16 @@ export default function UXConfigSection({ uxConfig, onUpdate }: UXConfigSectionP
               value={uxConfig.entry_modal.subtitle}
               onChange={(e) => updateEntryModal({ subtitle: e.target.value })}
             />
+            <Input
+              label="지연 시간 (초)"
+              type="number"
+              min="0"
+              max="60"
+              placeholder="0"
+              value={uxConfig.entry_modal.delay_seconds?.toString() || '0'}
+              onChange={(e) => updateEntryModal({ delay_seconds: parseInt(e.target.value) || 0 })}
+              helperText="페이지 진입 후 모달이 표시될 때까지의 대기 시간"
+            />
             <Switch
               label="닫기 버튼 표시"
               checked={uxConfig.entry_modal.allow_close}

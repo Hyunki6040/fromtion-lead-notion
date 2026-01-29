@@ -240,8 +240,8 @@ export default function ViewerPage() {
           height={blind_config?.iframe_height || 600}
         />
 
-        {/* 블러 오버레이 */}
-        {!isUnlocked && (
+        {/* 블러 오버레이 - method가 'none'이면 표시하지 않음 */}
+        {!isUnlocked && blind_config?.method !== 'none' && (
           <BlurOverlay
             method={blind_config?.method || 'preview-then-blur'}
             intensity={blind_config?.intensity || 'medium'}

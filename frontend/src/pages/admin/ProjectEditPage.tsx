@@ -308,6 +308,7 @@ export default function ProjectEditPage() {
                 <Select
                   label="블라인드 방식"
                   options={[
+                    { value: 'none', label: '없음 (리드 입력 선택사항)' },
                     { value: 'section-blur', label: '전체 블러' },
                     { value: 'preview-then-blur', label: '프리뷰 + 블러' },
                     { value: 'random-text-highlight', label: '랜덤 텍스트 하이라이트' },

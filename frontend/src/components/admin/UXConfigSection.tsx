@@ -88,9 +88,11 @@ export default function UXConfigSection({ uxConfig, onUpdate }: UXConfigSectionP
               value={uxConfig.top_form?.title || uxConfig.bottom_form?.title || ''}
               onChange={(e) => {
                 const title = e.target.value;
-                // 항상 둘 다 업데이트 (동기화 유지)
-                updateTopForm({ title });
-                updateBottomForm({ title });
+                // 한 번의 호출로 둘 다 업데이트
+                onUpdate({
+                  top_form: { ...uxConfig.top_form, title },
+                  bottom_form: { ...uxConfig.bottom_form, title },
+                });
               }}
             />
             <Input
@@ -98,9 +100,11 @@ export default function UXConfigSection({ uxConfig, onUpdate }: UXConfigSectionP
               value={uxConfig.top_form?.subtitle || uxConfig.bottom_form?.subtitle || ''}
               onChange={(e) => {
                 const subtitle = e.target.value;
-                // 항상 둘 다 업데이트 (동기화 유지)
-                updateTopForm({ subtitle });
-                updateBottomForm({ subtitle });
+                // 한 번의 호출로 둘 다 업데이트
+                onUpdate({
+                  top_form: { ...uxConfig.top_form, subtitle },
+                  bottom_form: { ...uxConfig.bottom_form, subtitle },
+                });
               }}
             />
           </div>

@@ -11,32 +11,40 @@ interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'typ
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   ({ className, label, description, error, ...props }, ref) => {
     return (
-      <div className="flex items-start">
-        <div className="flex items-center h-5">
-          <div className="relative">
+      <div className="flex items-start gap-3">
+        <div className="flex items-center justify-center flex-shrink-0 mt-0.5">
+          <div className="relative inline-flex items-center justify-center">
             <input
               ref={ref}
               type="checkbox"
               className={cn(
-                'peer h-5 w-5 rounded border-2 appearance-none cursor-pointer',
-                'transition-all duration-200',
+                'peer h-5 w-5 min-h-[20px] min-w-[20px] rounded border-2 cursor-pointer',
+                'transition-all duration-200 bg-white',
                 'checked:bg-[var(--project-primary)] checked:border-[var(--project-primary)]',
                 'focus:outline-none focus:ring-2 focus:ring-[var(--project-primary)] focus:ring-offset-2',
                 'disabled:cursor-not-allowed disabled:opacity-50',
                 error ? 'border-red-500' : 'border-gray-300',
                 className
               )}
+              style={{
+                WebkitAppearance: 'none',
+                MozAppearance: 'none',
+                appearance: 'none',
+              }}
               {...props}
             />
-            <Check className="absolute top-0.5 left-0.5 w-4 h-4 text-white pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity" />
+            <Check
+              className="absolute inset-0 m-auto w-3.5 h-3.5 text-white pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity"
+              strokeWidth={3}
+            />
           </div>
         </div>
         {(label || description) && (
-          <div className="ml-3">
+          <div className="flex-1 min-w-0">
             {label && (
               <label
                 htmlFor={props.id}
-                className="text-sm font-medium text-text-primary cursor-pointer"
+                className="text-sm font-medium text-text-primary cursor-pointer leading-5 break-words"
               >
                 {label}
                 {props.required && <span className="text-red-500 ml-0.5">*</span>}

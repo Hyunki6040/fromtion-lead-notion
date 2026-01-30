@@ -40,6 +40,17 @@ export default function ViewerPage() {
   const [showUnlockOptions, setShowUnlockOptions] = useState(false)
   const [countdown, setCountdown] = useState(5)
   const [showUnlockedToast, setShowUnlockedToast] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // 모바일 감지
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   // 프로젝트 로드
   useEffect(() => {
@@ -249,8 +260,8 @@ export default function ViewerPage() {
         '--project-primary': primaryColor,
       } as React.CSSProperties}
     >
-      {/* Top Form - 로그인 사용자에게는 표시 안함 */}
-      {ux_config?.top_form?.enabled && !isUnlocked && !isAuthenticated && (
+      {/* Top Form - 로그인 사용자에게는 표시 안함, 모바일에서 숨기기 옵션 지원 */}
+      {ux_config?.top_form?.enabled && !isUnlocked && !isAuthenticated && !(isMobile && ux_config?.top_form?.hide_on_mobile) && (
         <div className="flex-shrink-0">
           <TopBottomForm
             position="top"

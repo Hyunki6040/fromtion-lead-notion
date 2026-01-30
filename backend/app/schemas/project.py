@@ -15,6 +15,7 @@ class TopBottomFormConfig(BaseModel):
     enabled: bool = False
     title: str = ""
     subtitle: str = ""
+    hide_on_mobile: bool = False
 
 
 class EntryModalConfig(BaseModel):

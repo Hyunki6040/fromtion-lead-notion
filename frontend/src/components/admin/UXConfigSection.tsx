@@ -2,8 +2,8 @@ import Input from '../ui/Input'
 import Switch from '../ui/Switch'
 
 interface UXConfig {
-  top_form: { enabled: boolean; title: string; subtitle: string }
-  bottom_form: { enabled: boolean; title: string; subtitle: string }
+  top_form: { enabled: boolean; title: string; subtitle: string; hide_on_mobile?: boolean }
+  bottom_form: { enabled: boolean; title: string; subtitle: string; hide_on_mobile?: boolean }
   entry_modal: { enabled: boolean; title: string; subtitle: string; allow_close: boolean; delay_seconds: number }
   floating_cta: { enabled: boolean; label: string; mobile_bottom_fixed: boolean; modal_title?: string; modal_subtitle?: string }
   inline_blur_gate: { enabled: boolean; title: string; subtitle: string }
@@ -107,6 +107,14 @@ export default function UXConfigSection({ uxConfig, onUpdate }: UXConfigSectionP
                 });
               }}
             />
+            {/* 상단 폼 모바일 숨기기 옵션 */}
+            {uxConfig.top_form?.enabled && (
+              <Switch
+                label="상단 폼 모바일에서 숨기기"
+                checked={uxConfig.top_form?.hide_on_mobile ?? false}
+                onChange={(e) => updateTopForm({ hide_on_mobile: e.target.checked })}
+              />
+            )}
           </div>
         )}
       </div>

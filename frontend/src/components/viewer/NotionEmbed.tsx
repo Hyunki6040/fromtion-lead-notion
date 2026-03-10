@@ -206,7 +206,6 @@ export default function NotionEmbed({ url, isPreview: _isPreview = false, isLock
           height: `${containerHeight}px`,
           overflow: isLocked ? 'hidden' : 'auto',
           pointerEvents: (isLocked || hideComments) ? 'none' : 'auto',
-          ...(hideComments && { transform: 'translateX(calc(50% - 670px))' }),
         }}
         onLoad={handleIframeLoad}
         onError={handleIframeError}
@@ -215,16 +214,16 @@ export default function NotionEmbed({ url, isPreview: _isPreview = false, isLock
         scrolling={(isLocked || hideComments) ? 'no' : 'yes'}
       />
 
-      {/* 좌우 대칭 오버레이 - 콘텐츠 중앙 정렬 + 댓글 숨김 */}
+      {/* 좌우 오버레이 - 댓글 숨김 (우측) + 여백 정리 (좌측) */}
       {hideComments && (
         <>
           <div
             className="absolute top-0 left-0 bottom-0 pointer-events-none z-10"
-            style={{ width: 'max(0px, calc(50% - 365px))', background: notionBg }}
+            style={{ width: 'max(0px, calc(50% - 520px))', background: notionBg }}
           />
           <div
             className="absolute top-0 right-0 bottom-0 pointer-events-none z-10"
-            style={{ width: 'max(220px, calc(50% - 315px))', background: notionBg }}
+            style={{ width: 'max(220px, calc(100% - 1000px))', background: notionBg }}
           />
         </>
       )}

@@ -174,13 +174,19 @@ export default function LeadForm({
 
       {/* 세부사항 */}
       {formConfig.fields.detail?.enabled && (
-        <Textarea
-          placeholder={t.detail_placeholder || '세부사항을 입력해주세요.'}
-          rows={3}
-          error={errors.detail?.message as string}
-          required={false}
-          {...register('detail')}
-        />
+        <div>
+          <div className="flex items-center gap-1.5 mb-1.5">
+            <span className="text-sm font-medium text-text-primary">{t.detail_placeholder || '세부사항'}</span>
+            <span className="text-xs text-text-muted">(선택사항)</span>
+          </div>
+          <Textarea
+            placeholder={t.detail_placeholder || '세부사항을 입력해주세요.'}
+            rows={3}
+            error={errors.detail?.message as string}
+            required={false}
+            {...register('detail')}
+          />
+        </div>
       )}
 
       {/* 동의 옵션 */}

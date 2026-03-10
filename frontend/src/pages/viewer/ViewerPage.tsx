@@ -276,11 +276,10 @@ export default function ViewerPage() {
       )}
 
       {/* Notion Embed + Blur Overlay */}
-      {/* 블라인드 없음(none)이거나 언락된 경우: flex-1 제거하여 하단 폼이 보이도록 */}
       <div
-        className={`relative ${blind_config?.method === 'none' ? '' : 'overflow-hidden'} ${isUnlocked || blind_config?.method === 'none' ? '' : 'flex-1'}`}
+        className={`relative overflow-hidden ${isUnlocked || blind_config?.method === 'none' ? '' : 'flex-1'}`}
         style={{
-          minHeight: blind_config?.method === 'none' ? '100vh' : (blind_config?.iframe_height || 600),
+          minHeight: blind_config?.method === 'none' ? 0 : (blind_config?.iframe_height || 600),
           height: blind_config?.method === 'none' ? 'auto' : (isUnlocked ? 'auto' : (blind_config?.iframe_height || 600)),
         }}
       >

@@ -317,13 +317,11 @@ export default function LivePreview({
             )}
 
             {/* Notion Embed (미리보기 모드) */}
-            {/* 블라인드 없음(none)이거나 언락된 경우: 높이 auto로 하단 폼이 보이도록 */}
             <div
-              className="relative"
+              className="relative overflow-hidden"
               style={{
-                minHeight: blindConfig?.method === 'none' ? '100vh' : (blindConfig?.iframe_height || 600),
-                overflow: !isUnlocked && blindConfig?.method !== 'none' ? 'hidden' : 'visible',
                 height: blindConfig?.method === 'none' ? 'auto' : (isUnlocked ? 'auto' : (blindConfig?.iframe_height || 600)),
+                minHeight: blindConfig?.method === 'none' ? 0 : (blindConfig?.iframe_height || 600),
               }}
             >
               {notionUrl ? (

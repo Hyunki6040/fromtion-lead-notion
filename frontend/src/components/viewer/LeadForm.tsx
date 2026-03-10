@@ -76,9 +76,7 @@ export default function LeadForm({
     schemaShape.role = z.string().optional()
   }
 
-  if (formConfig.fields.detail?.enabled && formConfig.fields.detail?.required) {
-    schemaShape.detail = z.string().min(1, '세부사항을 입력해주세요.')
-  } else {
+  if (formConfig.fields.detail?.enabled) {
     schemaShape.detail = z.string().optional()
   }
 
@@ -180,7 +178,7 @@ export default function LeadForm({
           placeholder={t.detail_placeholder || '세부사항을 입력해주세요.'}
           rows={3}
           error={errors.detail?.message as string}
-          required={formConfig.fields.detail.required}
+          required={false}
           {...register('detail')}
         />
       )}

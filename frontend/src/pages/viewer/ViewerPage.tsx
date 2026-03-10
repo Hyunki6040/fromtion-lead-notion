@@ -287,7 +287,7 @@ export default function ViewerPage() {
         <NotionEmbed
           url={project.notion_url}
           isLocked={!isUnlocked && blind_config?.method !== 'none'}
-          height={blind_config?.method === 'none' ? Math.round(window.screen.height * 4) : (blind_config?.iframe_height || 600)}
+          height={blind_config?.method === 'none' ? Math.max(blind_config?.iframe_height || 600, Math.round(window.innerHeight * 1.5)) : (blind_config?.iframe_height || 600)}
         />
 
         {/* 블러 오버레이 - method가 'none'이면 표시하지 않음 */}

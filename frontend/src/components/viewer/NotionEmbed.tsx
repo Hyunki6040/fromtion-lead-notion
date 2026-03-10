@@ -224,7 +224,7 @@ export default function NotionEmbed({ url, isPreview: _isPreview = false, isLock
           />
           <div
             className="absolute top-0 right-0 bottom-0 pointer-events-none z-10"
-            style={{ width: 'max(0px, calc(50% - 365px))', background: notionBg }}
+            style={{ width: 'max(220px, calc(50% - 315px))', background: notionBg }}
           />
         </>
       )}

@@ -479,6 +479,7 @@ export default function ViewerPage() {
         }
         primaryColor={theme_config?.primary_color || '#FF5A1F'}
         allowClose={ux_config?.entry_modal?.allow_close}
+        skipLabel={form_config?.texts?.skip_label}
       >
         <LeadForm
           formConfig={form_config}

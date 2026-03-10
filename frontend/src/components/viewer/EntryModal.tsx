@@ -9,6 +9,7 @@ interface EntryModalProps {
   children: ReactNode
   primaryColor?: string
   allowClose?: boolean
+  skipLabel?: string
 }
 
 /**
@@ -25,6 +26,7 @@ export default function EntryModal({
   children,
   primaryColor = '#FF5A1F',
   allowClose = true,
+  skipLabel,
 }: EntryModalProps) {
   // 어두운 색상 생성 함수
   const getDarkerColor = (color: string) => {
@@ -82,13 +84,13 @@ export default function EntryModal({
       {/* 폼 (children) */}
       {children}
 
-      {/* 나중에 할게요 버튼 */}
+      {/* 건너뛰기 버튼 */}
       {allowClose && onClose && (
         <button
           onClick={onClose}
           className="w-full mt-3 text-sm text-text-muted hover:text-text-primary transition-colors"
         >
-          나중에 할게요
+          {skipLabel || '나중에 할게요'}
         </button>
       )}
     </Modal>

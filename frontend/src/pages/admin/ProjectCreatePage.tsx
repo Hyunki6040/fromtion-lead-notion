@@ -54,6 +54,16 @@ interface ProjectData {
     }
     unlock_duration: number
     button_label: string
+    texts: {
+      email_placeholder: string
+      name_placeholder: string
+      company_placeholder: string
+      role_placeholder: string
+      privacy_label: string
+      marketing_label: string
+      trust_text: string
+      skip_label: string
+    }
   }
   theme_config: {
     primary_color: string
@@ -92,6 +102,16 @@ const defaultProjectData: ProjectData = {
     },
     unlock_duration: 30,
     button_label: '전체 내용 보기',
+    texts: {
+      email_placeholder: '이메일',
+      name_placeholder: '이름',
+      company_placeholder: '회사명',
+      role_placeholder: '직무 선택',
+      privacy_label: '개인정보 처리에 동의합니다.',
+      marketing_label: '업데이트/새 템플릿 소식을 받아볼래요.',
+      trust_text: '스팸 없음 · 한 번만 입력 · 재방문시 자동 열림',
+      skip_label: '나중에 할게요',
+    },
   },
   theme_config: {
     primary_color: '#FF5A1F',
@@ -367,6 +387,7 @@ export default function ProjectCreatePage() {
                   <Select
                     label="블라인드 방식"
                     options={[
+                      { value: 'none', label: '없음 (블라인드 사용 안함)' },
                       { value: 'section-blur', label: '전체 블러' },
                       { value: 'preview-then-blur', label: '프리뷰 + 블러' },
                       { value: 'random-text-highlight', label: '랜덤 텍스트 하이라이트' },
@@ -379,52 +400,56 @@ export default function ProjectCreatePage() {
                       })
                     }
                   />
-                  <Select
-                    label="블러 강도"
-                    options={[
-                      { value: 'light', label: '약함' },
-                      { value: 'medium', label: '보통' },
-                      { value: 'strong', label: '강함' },
-                    ]}
-                    value={data.blind_config.intensity}
-                    onChange={(e) =>
-                      setData({
-                        ...data,
-                        blind_config: { ...data.blind_config, intensity: e.target.value },
-                      })
-                    }
-                  />
-                  <Select
-                    label="블러 시작 위치"
-                    options={[
-                      { value: 'top', label: '상단 (30%)' },
-                      { value: 'middle', label: '중간 (50%)' },
-                      { value: 'bottom', label: '하단 (70%)' },
-                    ]}
-                    value={data.blind_config.preset}
-                    onChange={(e) =>
-                      setData({
-                        ...data,
-                        blind_config: { ...data.blind_config, preset: e.target.value },
-                      })
-                    }
-                  />
-                  <Input
-                    label="콘텐츠 영역 높이 (px)"
-                    type="number"
-                    placeholder="600"
-                    value={data.blind_config.iframe_height?.toString() || '600'}
-                    onChange={(e) =>
-                      setData({
-                        ...data,
-                        blind_config: {
-                          ...data.blind_config,
-                          iframe_height: parseInt(e.target.value) || 600,
-                        },
-                      })
-                    }
-                    helperText="Notion 콘텐츠가 표시될 영역의 높이를 설정합니다"
-                  />
+                  {data.blind_config.method !== 'none' && (
+                    <>
+                      <Select
+                        label="블러 강도"
+                        options={[
+                          { value: 'light', label: '약함' },
+                          { value: 'medium', label: '보통' },
+                          { value: 'strong', label: '강함' },
+                        ]}
+                        value={data.blind_config.intensity}
+                        onChange={(e) =>
+                          setData({
+                            ...data,
+                            blind_config: { ...data.blind_config, intensity: e.target.value },
+                          })
+                        }
+                      />
+                      <Select
+                        label="블러 시작 위치"
+                        options={[
+                          { value: 'top', label: '상단 (30%)' },
+                          { value: 'middle', label: '중간 (50%)' },
+                          { value: 'bottom', label: '하단 (70%)' },
+                        ]}
+                        value={data.blind_config.preset}
+                        onChange={(e) =>
+                          setData({
+                            ...data,
+                            blind_config: { ...data.blind_config, preset: e.target.value },
+                          })
+                        }
+                      />
+                      <Input
+                        label="콘텐츠 영역 높이 (px)"
+                        type="number"
+                        placeholder="600"
+                        value={data.blind_config.iframe_height?.toString() || '600'}
+                        onChange={(e) =>
+                          setData({
+                            ...data,
+                            blind_config: {
+                              ...data.blind_config,
+                              iframe_height: parseInt(e.target.value) || 600,
+                            },
+                          })
+                        }
+                        helperText="Notion 콘텐츠가 표시될 영역의 높이를 설정합니다"
+                      />
+                    </>
+                  )}
                 </div>
               </SettingsSection>
 
@@ -521,6 +546,37 @@ export default function ProjectCreatePage() {
                       })
                     }
                   />
+
+                  <div className="space-y-3 pt-2 border-t border-border">
+                    <label className="text-sm font-medium text-text-primary">문구 설정</label>
+                    {(
+                      [
+                        { key: 'email_placeholder', label: '이메일 플레이스홀더' },
+                        { key: 'name_placeholder', label: '이름 플레이스홀더' },
+                        { key: 'company_placeholder', label: '회사명 플레이스홀더' },
+                        { key: 'role_placeholder', label: '직무 선택 플레이스홀더' },
+                        { key: 'privacy_label', label: '개인정보 동의 문구' },
+                        { key: 'marketing_label', label: '마케팅 동의 문구' },
+                        { key: 'trust_text', label: '신뢰 문구 (버튼 하단)' },
+                        { key: 'skip_label', label: '건너뛰기 버튼 문구' },
+                      ] as const
+                    ).map(({ key, label }) => (
+                      <Input
+                        key={key}
+                        label={label}
+                        value={data.form_config.texts[key]}
+                        onChange={(e) =>
+                          setData({
+                            ...data,
+                            form_config: {
+                              ...data.form_config,
+                              texts: { ...data.form_config.texts, [key]: e.target.value },
+                            },
+                          })
+                        }
+                      />
+                    ))}
+                  </div>
                 </div>
               </SettingsSection>
 

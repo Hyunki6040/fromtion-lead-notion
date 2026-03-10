@@ -35,6 +35,16 @@ export interface GuestProjectData {
     }
     unlock_duration: number
     button_label: string
+    texts: {
+      email_placeholder: string
+      name_placeholder: string
+      company_placeholder: string
+      role_placeholder: string
+      privacy_label: string
+      marketing_label: string
+      trust_text: string
+      skip_label: string
+    }
   }
   theme_config: {
     primary_color: string
@@ -78,6 +88,16 @@ export const defaultGuestProjectData: Omit<GuestProjectData, 'id' | 'created_at'
     },
     unlock_duration: 30,
     button_label: 'Unlock',
+    texts: {
+      email_placeholder: '이메일',
+      name_placeholder: '이름',
+      company_placeholder: '회사명',
+      role_placeholder: '직무 선택',
+      privacy_label: '개인정보 처리에 동의합니다.',
+      marketing_label: '업데이트/새 템플릿 소식을 받아볼래요.',
+      trust_text: '스팸 없음 · 한 번만 입력 · 재방문시 자동 열림',
+      skip_label: '나중에 할게요',
+    },
   },
   theme_config: {
     primary_color: '#FF5A1F', // FORMTION Orange (기본값)

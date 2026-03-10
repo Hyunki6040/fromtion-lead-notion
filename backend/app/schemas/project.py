@@ -116,6 +116,19 @@ class ConsentOptionsConfig(BaseModel):
     marketing: ConsentConfig = ConsentConfig(enabled=False, required=False)
 
 
+class FormTextsConfig(BaseModel):
+    """폼 텍스트 설정 (다국어 지원)"""
+
+    email_placeholder: str = "이메일"
+    name_placeholder: str = "이름"
+    company_placeholder: str = "회사명"
+    role_placeholder: str = "직무 선택"
+    privacy_label: str = "개인정보 처리에 동의합니다."
+    marketing_label: str = "업데이트/새 템플릿 소식을 받아볼래요."
+    trust_text: str = "스팸 없음 · 한 번만 입력 · 재방문시 자동 열림"
+    skip_label: str = "나중에 할게요"
+
+
 class FormConfig(BaseModel):
     """폼 설정"""
 
@@ -123,6 +136,7 @@ class FormConfig(BaseModel):
     consent: ConsentOptionsConfig = ConsentOptionsConfig()
     unlock_duration: int = Field(default=30, ge=1, le=365)
     button_label: str = "Unlock"
+    texts: FormTextsConfig = FormTextsConfig()
 
 
 class ThemeConfig(BaseModel):

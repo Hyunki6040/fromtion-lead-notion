@@ -322,72 +322,76 @@ export default function ProjectEditPage() {
                     })
                   }
                 />
-                {project.blind_config?.method === 'random-text-highlight' && (
-                  <Input
-                    label="가릴 단어 비율 (%)"
-                    type="number"
-                    placeholder="30"
-                    min="0"
-                    max="100"
-                    value={project.blind_config?.text_highlight_ratio?.toString() || '30'}
-                    onChange={(e) =>
-                      setProject({
-                        ...project,
-                        blind_config: {
-                          ...project.blind_config,
-                          text_highlight_ratio: parseInt(e.target.value) || 30,
-                        },
-                      })
-                    }
-                    helperText="0-100% 사이의 값으로 설정하세요. 높을수록 더 많은 텍스트가 가려집니다."
-                  />
+                {project.blind_config?.method !== 'none' && (
+                  <>
+                    {project.blind_config?.method === 'random-text-highlight' && (
+                      <Input
+                        label="가릴 단어 비율 (%)"
+                        type="number"
+                        placeholder="30"
+                        min="0"
+                        max="100"
+                        value={project.blind_config?.text_highlight_ratio?.toString() || '30'}
+                        onChange={(e) =>
+                          setProject({
+                            ...project,
+                            blind_config: {
+                              ...project.blind_config,
+                              text_highlight_ratio: parseInt(e.target.value) || 30,
+                            },
+                          })
+                        }
+                        helperText="0-100% 사이의 값으로 설정하세요. 높을수록 더 많은 텍스트가 가려집니다."
+                      />
+                    )}
+                    <Select
+                      label="블러 강도"
+                      options={[
+                        { value: 'light', label: '약함' },
+                        { value: 'medium', label: '중간' },
+                        { value: 'strong', label: '강함' },
+                      ]}
+                      value={project.blind_config?.intensity || 'medium'}
+                      onChange={(e) =>
+                        setProject({
+                          ...project,
+                          blind_config: { ...project.blind_config, intensity: e.target.value },
+                        })
+                      }
+                    />
+                    <Select
+                      label="블러 시작 위치"
+                      options={[
+                        { value: 'top', label: '상단 (30%)' },
+                        { value: 'middle', label: '중간 (50%)' },
+                        { value: 'bottom', label: '하단 (70%)' },
+                      ]}
+                      value={project.blind_config?.preset || 'middle'}
+                      onChange={(e) =>
+                        setProject({
+                          ...project,
+                          blind_config: { ...project.blind_config, preset: e.target.value },
+                        })
+                      }
+                    />
+                    <Input
+                      label="콘텐츠 영역 높이 (px)"
+                      type="number"
+                      placeholder="600"
+                      value={project.blind_config?.iframe_height?.toString() || '600'}
+                      onChange={(e) =>
+                        setProject({
+                          ...project,
+                          blind_config: {
+                            ...project.blind_config,
+                            iframe_height: parseInt(e.target.value) || 600,
+                          },
+                        })
+                      }
+                      helperText="Notion 콘텐츠가 표시될 영역의 높이를 설정합니다"
+                    />
+                  </>
                 )}
-                <Select
-                  label="블러 강도"
-                  options={[
-                    { value: 'light', label: '약함' },
-                    { value: 'medium', label: '중간' },
-                    { value: 'strong', label: '강함' },
-                  ]}
-                  value={project.blind_config?.intensity || 'medium'}
-                  onChange={(e) =>
-                    setProject({
-                      ...project,
-                      blind_config: { ...project.blind_config, intensity: e.target.value },
-                    })
-                  }
-                />
-                <Select
-                  label="블러 시작 위치"
-                  options={[
-                    { value: 'top', label: '상단 (30%)' },
-                    { value: 'middle', label: '중간 (50%)' },
-                    { value: 'bottom', label: '하단 (70%)' },
-                  ]}
-                  value={project.blind_config?.preset || 'middle'}
-                  onChange={(e) =>
-                    setProject({
-                      ...project,
-                      blind_config: { ...project.blind_config, preset: e.target.value },
-                    })
-                  }
-                />
-                <Input
-                  label="콘텐츠 영역 높이 (px)"
-                  type="number"
-                  placeholder="600"
-                  value={project.blind_config?.iframe_height?.toString() || '600'}
-                  onChange={(e) =>
-                    setProject({
-                      ...project,
-                      blind_config: {
-                        ...project.blind_config,
-                        iframe_height: parseInt(e.target.value) || 600,
-                      },
-                    })
-                  }
-                  helperText="Notion 콘텐츠가 표시될 영역의 높이를 설정합니다"
-                />
               </div>
             </SettingsSection>
 
@@ -466,6 +470,37 @@ export default function ProjectEditPage() {
                     })
                   }
                 />
+              </div>
+
+              <div className="space-y-3 pt-2 border-t border-border">
+                <label className="text-sm font-medium text-text-primary">문구 설정</label>
+                {(
+                  [
+                    { key: 'email_placeholder', label: '이메일 플레이스홀더' },
+                    { key: 'name_placeholder', label: '이름 플레이스홀더' },
+                    { key: 'company_placeholder', label: '회사명 플레이스홀더' },
+                    { key: 'role_placeholder', label: '직무 선택 플레이스홀더' },
+                    { key: 'privacy_label', label: '개인정보 동의 문구' },
+                    { key: 'marketing_label', label: '마케팅 동의 문구' },
+                    { key: 'trust_text', label: '신뢰 문구 (버튼 하단)' },
+                    { key: 'skip_label', label: '건너뛰기 버튼 문구' },
+                  ] as const
+                ).map(({ key, label }) => (
+                  <Input
+                    key={key}
+                    label={label}
+                    value={project.form_config?.texts?.[key] ?? ''}
+                    onChange={(e) =>
+                      setProject({
+                        ...project,
+                        form_config: {
+                          ...project.form_config,
+                          texts: { ...project.form_config?.texts, [key]: e.target.value },
+                        },
+                      })
+                    }
+                  />
+                ))}
               </div>
             </SettingsSection>
 

@@ -20,6 +20,16 @@ interface FormConfig {
     marketing: { enabled: boolean; required: boolean }
   }
   button_label?: string
+  texts?: {
+    email_placeholder?: string
+    name_placeholder?: string
+    company_placeholder?: string
+    role_placeholder?: string
+    privacy_label?: string
+    marketing_label?: string
+    trust_text?: string
+    skip_label?: string
+  }
 }
 
 interface LeadFormProps {
@@ -38,6 +48,7 @@ export default function LeadForm({
   primaryColor = '#FF5A1F',
 }: LeadFormProps) {
   const [error, setError] = useState<string | null>(null)
+  const t = formConfig.texts || {}
 
   // 동적 스키마 생성
   const schemaShape: any = {
@@ -113,7 +124,7 @@ export default function LeadForm({
       {/* 이메일 */}
       <Input
         type="email"
-        placeholder="이메일"
+        placeholder={t.email_placeholder || '이메일'}
         error={errors.email?.message as string}
         required
         {...register('email')}
@@ -123,7 +134,7 @@ export default function LeadForm({
       {formConfig.fields.name?.enabled && (
         <Input
           type="text"
-          placeholder="이름"
+          placeholder={t.name_placeholder || '이름'}
           error={errors.name?.message as string}
           required={formConfig.fields.name.required}
           {...register('name')}
@@ -134,7 +145,7 @@ export default function LeadForm({
       {formConfig.fields.company?.enabled && (
         <Input
           type="text"
-          placeholder="회사명"
+          placeholder={t.company_placeholder || '회사명'}
           error={errors.company?.message as string}
           required={formConfig.fields.company.required}
           {...register('company')}
@@ -145,7 +156,7 @@ export default function LeadForm({
       {formConfig.fields.role?.enabled && (
         <Select
           options={[
-            { value: '', label: '직무 선택' },
+            { value: '', label: t.role_placeholder || '직무 선택' },
             ...roleOptions.map((role) => ({ value: role, label: role })),
           ]}
           error={errors.role?.message as string}
@@ -160,9 +171,8 @@ export default function LeadForm({
           <Checkbox
             label={
               <span>
-                {formConfig.consent.privacy.required 
-                  ? "개인정보 처리에 동의합니다. (필수)"
-                  : "개인정보 처리에 동의합니다."}
+                {t.privacy_label || '개인정보 처리에 동의합니다.'}
+                {formConfig.consent.privacy.required ? ' (필수)' : ''}
                 {' '}
                 <Link
                   to="/privacy"
@@ -187,9 +197,7 @@ export default function LeadForm({
           <Checkbox
             label={
               <span>
-                업데이트/새 템플릿 소식을 받아볼래요. (선택)
-                {' '}
-                <span className="text-xs text-text-muted">(마케팅 수신동의)</span>
+                {t.marketing_label || '업데이트/새 템플릿 소식을 받아볼래요.'} (선택)
                 {' '}
                 <Link
                   to="/marketing-consent"
@@ -223,9 +231,11 @@ export default function LeadForm({
       </Button>
 
       {/* 안내 문구 - 신뢰 문구 */}
-      <p className="text-xs text-text-muted text-center">
-        스팸 없음 · 한 번만 입력 · 재방문시 자동 열림
-      </p>
+      {(t.trust_text !== '' ) && (
+        <p className="text-xs text-text-muted text-center">
+          {t.trust_text || '스팸 없음 · 한 번만 입력 · 재방문시 자동 열림'}
+        </p>
+      )}
     </form>
   )
 }

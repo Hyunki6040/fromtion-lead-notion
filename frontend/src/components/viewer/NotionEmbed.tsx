@@ -175,7 +175,7 @@ export default function NotionEmbed({ url, isPreview: _isPreview = false, isLock
         overflow: 'hidden',
         pointerEvents: isLocked ? 'none' : 'auto',
         ...(hideComments ? {
-          clipPath: 'inset(0 240px 0 0)',
+          clipPath: 'inset(0 220px 0 0)',
           colorScheme: 'light dark',
           background: 'Canvas',
         } : { background: 'white' }),

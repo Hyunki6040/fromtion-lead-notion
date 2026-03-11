@@ -60,6 +60,7 @@ export default function NotionEmbed({ url, isPreview: _isPreview = false, isLock
   const [isDarkMode, setIsDarkMode] = useState(
     () => typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches
   )
+  const [autoHeight, setAutoHeight] = useState<number | null>(null)
   const iframeRef = useRef<HTMLIFrameElement>(null)
 
   useEffect(() => {
@@ -68,6 +69,21 @@ export default function NotionEmbed({ url, isPreview: _isPreview = false, isLock
     mq.addEventListener('change', handler)
     return () => mq.removeEventListener('change', handler)
   }, [])
+
+  // Notion iframe가 postMessage로 실제 페이지 높이를 전달하면 자동 적용
+  useEffect(() => {
+    if (!hideComments) return
+    const handler = (e: MessageEvent) => {
+      if (!String(e.origin).includes('notion.site')) return
+      try {
+        const data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data
+        const h = data?.height ?? data?.frameHeight ?? data?.scrollHeight
+        if (typeof h === 'number' && h > 500) setAutoHeight(h + 200)
+      } catch { /* ignore */ }
+    }
+    window.addEventListener('message', handler)
+    return () => window.removeEventListener('message', handler)
+  }, [hideComments])
 
   useEffect(() => {
     if (!url) {
@@ -173,7 +189,8 @@ export default function NotionEmbed({ url, isPreview: _isPreview = false, isLock
   }
 
   // none 모드: 오버레이 div로 우측 댓글 영역 숨김 (다크모드 대응)
-  const containerHeight = height
+  // Notion postMessage로 실제 높이를 받으면 그걸 사용, 아니면 prop height 사용
+  const containerHeight = autoHeight ?? height
   // Notion 다크모드 배경색 (#191919) - 오버레이가 자연스럽게 블렌딩되도록
   const notionBg = isDarkMode ? '#191919' : 'white'
 
